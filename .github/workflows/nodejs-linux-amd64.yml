@@ -29,9 +29,7 @@ jobs:
 
       # Runs git clone
       - name: Clone the NodeJS Repo
-        run: |
-          git clone https://github.com/NodeJS/Node NodeJS
-          git checkout v17.5.0
+        run: git clone --branch v17.5.0 --depth 1 https://github.com/NodeJS/Node NodeJS
 
       - name: Configure the NodeJS build
         working-directory: ./NodeJS
