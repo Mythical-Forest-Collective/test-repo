@@ -21,31 +21,30 @@ jobs:
 
       # Runs apt-get
       - name: Install GCC, G++, and other needed tools...
-        run: sudo apt-get install python3 python3-pip gcc make cmake git wget -y 
-
-      # Runs wget to get the patch file for NodeJS
-      - name: Fetch patch file for Javet
-        run: wget https://github.com/caoccao/Javet/raw/main/scripts/python/patch_node_build.py
+        run: sudo apt-get install python3 python3-pip gcc make cmake git -y
 
       # Runs git clone
       - name: Clone the NodeJS Repo
         run: git clone --branch v17.5.0 --depth 1 https://github.com/NodeJS/Node NodeJS
 
+      - name: Clone Javet
+        run: git clone --branch 1.0.7 --depth 1 https://github.com/caoccao/Javet Javet
+
       - name: Configure the NodeJS build
         working-directory: ./NodeJS
         run: |
-          python3 ../patch_node_build.py -p .
+          python3 ../Javet/scripts/patch_node_build.py -p .
           ./configure --enable-static --without-intl
-          python3 ../patch_node_build.py -p .
+          python3 ../Javet/scripts/patch_node_build.py -p .
 
       - name: Build NodeJS
         working-directory: ./NodeJS
         run: |
           make -j4
 
-      - name: Clone Javet
-        run: git clone --branch 1.0.7 --depth 1 https://github.com/caoccao/Javet Javet
-
       - name: Build Javet
-        working-directory: ./Javet
-        run: echo Not implemented yet!
+        working-directory: ./Javet/cpp
+        run: |
+          export NODE_HOME=$(realpath ../..NodeJS)
+          export JAVET_HOME=$(realpath ..)
+          sh build-linux.sh -DNODE_DIR=${NODE_HOME}
