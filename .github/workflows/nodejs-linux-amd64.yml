@@ -39,8 +39,7 @@ jobs:
 
       - name: Build NodeJS
         working-directory: ./NodeJS
-        run: |
-          make -j4
+        run: make -j4
 
       - name: Build Javet
         working-directory: ./Javet/cpp
@@ -48,3 +47,9 @@ jobs:
           export NODE_HOME=$(realpath ../..NodeJS)
           export JAVET_HOME=$(realpath ..)
           sh build-linux.sh -DNODE_DIR=${NODE_HOME}
+
+      - name: Upload output .so file
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            Javet/src/main/resources/libjavet-node-linux-x86_64.v.1.1.0.so
