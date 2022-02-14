@@ -33,9 +33,9 @@ jobs:
       - name: Configure the NodeJS build
         working-directory: ./NodeJS
         run: |
-          python3 ../Javet/scripts/patch_node_build.py -p .
+          python3 ../Javet/scripts/python/patch_node_build.py -p .
           ./configure --enable-static --without-intl
-          python3 ../Javet/scripts/patch_node_build.py -p .
+          python3 ../Javet/scripts/python/patch_node_build.py -p .
 
       - name: Build NodeJS
         working-directory: ./NodeJS
