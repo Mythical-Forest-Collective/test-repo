@@ -44,7 +44,7 @@ jobs:
       - name: Build Javet
         working-directory: ./Javet/cpp
         run: |
-          export NODE_HOME=$(realpath ../..NodeJS)
+          export NODE_HOME=$(realpath ../../NodeJS)
           export JAVET_HOME=$(realpath ..)
           sh build-linux.sh -DNODE_DIR=${NODE_HOME}
 
