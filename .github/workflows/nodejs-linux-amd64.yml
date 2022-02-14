@@ -50,6 +50,7 @@ jobs:
 
       - name: Upload output .so file
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             Javet/src/main/resources/libjavet-node-linux-x86_64.v.1.1.0.so
