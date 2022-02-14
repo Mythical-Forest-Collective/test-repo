@@ -25,10 +25,10 @@ jobs:
 
       # Runs git clone
       - name: Clone the NodeJS Repo
-        run: git clone --branch v17.5.0 --depth 1 https://github.com/NodeJS/Node NodeJS
+        run: git clone --branch v16.14.0 --depth 1 https://github.com/NodeJS/Node NodeJS
 
       - name: Clone Javet
-        run: git clone --branch 1.0.7 --depth 1 https://github.com/caoccao/Javet Javet
+        run: git clone --branch 1.1.0 --depth 1 https://github.com/caoccao/Javet Javet
 
       - name: Configure the NodeJS build
         working-directory: ./NodeJS
