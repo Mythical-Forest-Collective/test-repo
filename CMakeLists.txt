@@ -40,7 +40,7 @@ if (POLICY CMP0091)
 endif()
 
 if(NOT DEFINED TARGET_ARCH)
-    add_definitions(-DTARGET_ARCH=CMAKE_HOST_SYSTEM_PROCESSOR)
+    add_compile_definitions(TARGET_ARCH=CMAKE_HOST_SYSTEM_PROCESSOR)
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
