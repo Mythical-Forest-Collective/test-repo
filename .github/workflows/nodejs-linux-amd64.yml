@@ -2,9 +2,7 @@
 
 name: Build NodeJS Linux Amd64
 
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -44,17 +42,13 @@ jobs:
       - name: Build Javet
         working-directory: ./Javet/cpp
         run: |
-          cp ${GITHUB_WORKSPACE}/CMakeLists.txt ./CMakeLists.txt
           export NODE_HOME=$(realpath ../../NodeJS)
           export JAVET_HOME=$(realpath ..)
           sh build-linux.sh -DNODE_DIR=${NODE_HOME}
 
       - name: Upload output .so file
-        run: |
-          git clone https://github.com/Mythical-Forest-Collective/test-repo builds --branch builds
-          cp Javet/src/main/resources/libjavet-node-linux-x86_64.v.1.1.0.so builds/libjavet-node-linux-x86_64.v.1.1.0.so
-          cd builds
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'gh.actions@users.noreply.github.com'
-          git commit -am "Add `libjavet-node-linux-x86_64.v.1.1.0.so` artifact"
-          git push
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            Javet/src/main/resources/libjavet-node-linux-x86_64.v.1.1.0.so
