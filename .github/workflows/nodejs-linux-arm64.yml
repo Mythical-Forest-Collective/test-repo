@@ -34,7 +34,7 @@ jobs:
         working-directory: ./NodeJS
         run: |
           python3 ../Javet/scripts/python/patch_node_build.py -p .
-          CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ CC_host="gcc" CXX_host="g++" ./configure --enable-static --without-intl --cross-compiling --dest-os=linux --with-arm-float-abi=hard --with-arm-fpu=neon
+          CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ CC_host="gcc" CXX_host="g++" ./configure --prefix=../install --enable-static --without-intl --cross-compiling --dest-os=linux --with-arm-float-abi=hard --with-arm-fpu=neon
           python3 ../Javet/scripts/python/patch_node_build.py -p .
 
       - name: Build NodeJS
@@ -46,8 +46,8 @@ jobs:
         run: |
           export NODE_HOME=$(realpath ../../NodeJS)
           export JAVET_HOME=$(realpath ..)
-          CMAKE_C_COMPILER
-          CMAKE_CXX_COMPILER
+          # CMAKE_C_COMPILER=aarch64-linux-gnu-gcc
+          # CMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
           sh build-linux.sh -DNODE_DIR=${NODE_HOME} -DTARGET_ARCH=arm64 -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
 
       - name: Upload output .so file
