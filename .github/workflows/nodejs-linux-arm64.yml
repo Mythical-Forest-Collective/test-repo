@@ -34,7 +34,7 @@ jobs:
         working-directory: ./NodeJS
         run: |
           python3 ../Javet/scripts/python/patch_node_build.py -p .
-          CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ CC_host="gcc" CXX_host="g++" ./configure --prefix=../install --enable-static --without-intl --cross-compiling --dest-os=linux --with-arm-float-abi=hard --with-arm-fpu=neon
+          CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ CC_host="gcc" CXX_host="g++" ./configure --prefix=../install --enable-static --without-intl --dest-cpu=arm64 --cross-compiling --dest-os=linux --with-arm-float-abi=hard --with-arm-fpu=neon
           python3 ../Javet/scripts/python/patch_node_build.py -p .
 
       - name: Build NodeJS
