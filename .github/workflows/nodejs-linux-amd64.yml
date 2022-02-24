@@ -18,8 +18,8 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs apt-get
-      - name: Install GCC, G++, and other needed tools...
-        run: sudo apt-get install python3 python3-pip gcc make cmake git -y
+      - name: Install Clang, and other needed tools...
+        run: sudo apt-get install python3 python3-pip clang make cmake git -y
 
       # Runs git clone
       - name: Clone the NodeJS Repo
@@ -34,7 +34,7 @@ jobs:
         working-directory: ./NodeJS
         run: |
           python3 ../Javet/scripts/python/patch_node_build.py -p .
-          ./configure --enable-static --without-intl
+          CC=clang CXX=clang++ ./configure --enable-static --without-intl
           python3 ../Javet/scripts/python/patch_node_build.py -p .
 
       - name: Build NodeJS
@@ -46,7 +46,7 @@ jobs:
         run: |
           export NODE_HOME=$(realpath ../../NodeJS)
           export JAVET_HOME=$(realpath ..)
-          sh build-linux.sh -DNODE_DIR=${NODE_HOME} -Dx86_64
+          sh build-linux.sh -DNODE_DIR=${NODE_HOME} -Dx86_64 -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
 
       - name: Upload output .so file
         uses: softprops/action-gh-release@v1
